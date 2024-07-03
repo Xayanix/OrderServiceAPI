@@ -18,7 +18,7 @@ import java.util.Map;
 
 @EnableKafka
 @Configuration
-public class KafkaConfig {
+class KafkaConfig {
 
     @Bean
     public ProducerFactory<String, OrderDAO> producerFactory() {

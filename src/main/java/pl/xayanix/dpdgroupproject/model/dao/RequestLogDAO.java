@@ -4,23 +4,22 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class RequestLogDAO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String requestUrl;
-
-    private String httpMethod;
-
-    private String ipAddress;
-
-    private LocalDateTime timestamp;
+    Long id;
+    String requestUrl;
+    String httpMethod;
+    String ipAddress;
+    LocalDateTime timestamp;
 }

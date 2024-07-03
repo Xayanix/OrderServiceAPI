@@ -4,21 +4,24 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 
 
 @Entity
 @Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class OrderDAO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String shipmentNumber;
-    private String receiverEmail;
-    private String receiverCountryCode;
-    private String senderCountryCode;
-    private Integer statusCode;
+    Long id;
+    String shipmentNumber;
+    String receiverEmail;
+    String receiverCountryCode;
+    String senderCountryCode;
+    Integer statusCode;
 
     /**
      * Compares this OrderDAO object with another OrderDAO object (updatedOrderDAO) to determine if they are equal for update purposes.

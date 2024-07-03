@@ -1,5 +1,8 @@
 package pl.xayanix.dpdgroupproject.service.impl;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,21 +18,15 @@ import java.util.Optional;
 
 
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class KafkaConsumerService {
 
-    private final OrderRepository orderRepository;
-    private final IEmailService emailService;
-    private final IOrderService orderService;
+    OrderRepository orderRepository;
+    IEmailService emailService;
+    IOrderService orderService;
 
     private static final Logger logger = LoggerFactory.getLogger(KafkaConsumerService.class);
-
-
-    @Autowired
-    public KafkaConsumerService(OrderRepository orderRepository, IEmailService emailService, IOrderService orderService) {
-        this.orderRepository = orderRepository;
-        this.emailService = emailService;
-        this.orderService = orderService;
-    }
 
     /**
      * Listens to messages from the "order-topic" Kafka topic and processes incoming orders asynchronously.

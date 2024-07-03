@@ -2,13 +2,14 @@ package pl.xayanix.dpdgroupproject.serializers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.common.serialization.Deserializer;
+import org.springframework.beans.factory.annotation.Autowired;
 import pl.xayanix.dpdgroupproject.model.dao.OrderDAO;
 
 import java.util.Map;
 
 public class OrderDeserializer implements Deserializer<OrderDAO> {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public void configure(Map<String, ?> configs, boolean isKey) {

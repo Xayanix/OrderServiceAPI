@@ -5,6 +5,9 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -18,16 +21,12 @@ import java.util.concurrent.Executors;
 
 
 @Component
+@RequiredArgsConstructor
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class RequestLoggingFilter extends OncePerRequestFilter {
 
-    private final RequestLogRepository requestLogRepository;
-    private final Executor asyncTaskExecutor;
-
-    @Autowired
-    public RequestLoggingFilter(RequestLogRepository requestLogRepository){
-        this.requestLogRepository = requestLogRepository;
-        this.asyncTaskExecutor = Executors.newSingleThreadExecutor();
-    }
+    RequestLogRepository requestLogRepository;
+    Executor asyncTaskExecutor = Executors.newSingleThreadExecutor();
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {

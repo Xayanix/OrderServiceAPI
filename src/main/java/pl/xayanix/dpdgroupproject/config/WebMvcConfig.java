@@ -9,7 +9,7 @@ import pl.xayanix.dpdgroupproject.filter.RequestLoggingFilter;
 
 
 @Configuration
-public class WebMvcConfig implements WebMvcConfigurer {
+class WebMvcConfig implements WebMvcConfigurer {
 
     @Autowired
     private RequestLoggingFilter requestLoggingFilter;

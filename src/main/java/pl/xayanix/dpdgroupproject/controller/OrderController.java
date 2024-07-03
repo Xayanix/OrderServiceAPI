@@ -4,11 +4,13 @@
  */
 package pl.xayanix.dpdgroupproject.controller;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.xayanix.dpdgroupproject.exceptions.InvalidOrderException;
 import pl.xayanix.dpdgroupproject.model.dao.OrderDAO;
@@ -16,16 +18,13 @@ import pl.xayanix.dpdgroupproject.service.IOrderService;
 
 import java.util.concurrent.CompletableFuture;
 
-@Controller
+@RestController
 @RequestMapping("/orders")
+@RequiredArgsConstructor
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class OrderController {
 
-	private final IOrderService orderService;
-
-	@Autowired
-	public OrderController(IOrderService orderService){
-		this.orderService = orderService;
-	}
+	IOrderService orderService;
 
 	/**
 	 * Asynchronously handles POST requests to create new orders.
