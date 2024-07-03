@@ -2,7 +2,6 @@ package pl.xayanix.dpdgroupproject.serializers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.common.serialization.Deserializer;
-import org.springframework.beans.factory.annotation.Autowired;
 import pl.xayanix.dpdgroupproject.model.dao.OrderDAO;
 
 import java.util.Map;
