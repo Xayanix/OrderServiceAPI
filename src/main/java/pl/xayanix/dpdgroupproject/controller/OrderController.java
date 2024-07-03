@@ -40,10 +40,10 @@ public class OrderController {
 		try {
 			orderService.processOrder(order);
 		} catch (IllegalArgumentException ex) {
-			return CompletableFuture.completedFuture(new ResponseEntity<>(new InvalidOrderException(ex.getMessage()), HttpStatus.BAD_REQUEST));
+			return CompletableFuture.completedFuture(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InvalidOrderException(ex.getMessage())));
 		}
 
-		return CompletableFuture.completedFuture(new ResponseEntity<>(HttpStatus.OK));
+		return CompletableFuture.completedFuture(ResponseEntity.status(HttpStatus.OK).build());
 	}
 
 	/**
@@ -60,9 +60,9 @@ public class OrderController {
 		try {
 			orderService.updateOrder(orderId, order);
 		} catch (IllegalArgumentException ex) {
-			return CompletableFuture.completedFuture(new ResponseEntity<>(new InvalidOrderException(ex.getMessage()), HttpStatus.BAD_REQUEST));
+			return CompletableFuture.completedFuture(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new InvalidOrderException(ex.getMessage())));
 		}
 
-		return CompletableFuture.completedFuture(new ResponseEntity<>(HttpStatus.OK));
+		return CompletableFuture.completedFuture(ResponseEntity.status(HttpStatus.OK).build());
 	}
 }
