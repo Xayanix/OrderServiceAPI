@@ -5,6 +5,7 @@
 package pl.xayanix.dpdgroupproject.service.impl;
 
 import com.google.common.base.Preconditions;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Async;
@@ -33,6 +34,7 @@ public class OrderService implements IOrderService {
      * @throws IllegalArgumentException If any validation check fails for the order.
      */
     @Override
+    @Transactional
     public void processOrder(OrderDAO order) {
         this.validateOrder(order);
         this.validateStatusCode(order);

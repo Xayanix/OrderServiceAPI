@@ -10,7 +10,7 @@ import pl.xayanix.dpdgroupproject.service.IEmailService;
 @Service
 public class EmailService implements IEmailService {
 
-	private final Logger logger = LoggerFactory.getLogger(EmailService.class);
+	private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
 
 	// TODO: Implement async email service
 	@Override

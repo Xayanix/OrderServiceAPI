@@ -1,5 +1,8 @@
 package pl.xayanix.dpdgroupproject.service.impl;
 
+import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.scheduling.annotation.Async;
@@ -9,12 +12,18 @@ import pl.xayanix.dpdgroupproject.repository.OrderRepository;
 import pl.xayanix.dpdgroupproject.service.IEmailService;
 import pl.xayanix.dpdgroupproject.service.IOrderService;
 
+import java.util.Optional;
+
+
 @Service
 public class KafkaConsumerService {
 
     private final OrderRepository orderRepository;
     private final IEmailService emailService;
     private final IOrderService orderService;
+
+    private static final Logger logger = LoggerFactory.getLogger(KafkaConsumerService.class);
+
 
     @Autowired
     public KafkaConsumerService(OrderRepository orderRepository, IEmailService emailService, IOrderService orderService) {
@@ -33,15 +42,18 @@ public class KafkaConsumerService {
     @Async("asyncExecutor")
     @KafkaListener(topics = "order-topic", groupId = "order-group")
     public void listenOrderTopic(OrderDAO order) {
-        if (order.getId() != null) {
-            OrderDAO existingOrder = updateExistingOrder(order);
-            if (existingOrder != null) {
-                this.processOrder(existingOrder);
-            }
-            return;
-        }
+        logger.info("Received order with ID: {}", order.getId());
 
-        this.processOrder(order);
+        try {
+            if (order.getId() != null) {
+                Optional<OrderDAO> existingOrderOpt = updateExistingOrder(order);
+                existingOrderOpt.ifPresent(this::processOrder);
+            } else {
+                this.processOrder(order);
+            }
+        } catch (Exception e) {
+            logger.error("Error processing order with ID: {}", order.getId(), e);
+        }
     }
 
     /**
@@ -58,16 +70,15 @@ public class KafkaConsumerService {
      * Updates an existing order in the database if there are changes compared to the new order.
      *
      * @param order The updated OrderDAO object received from Kafka.
-     * @return The updated existing OrderDAO object if changes were applied; null otherwise.
+     * @return The updated existing OrderDAO object wrapped in Optional if changes were applied; Optional.empty() otherwise.
      */
-    private OrderDAO updateExistingOrder(OrderDAO order) {
-        OrderDAO existingOrder = orderRepository.findById(order.getId()).orElse(null);
-        if (existingOrder != null && hasChanges(existingOrder, order)) {
-            updateOrderFields(existingOrder, order);
-            return existingOrder;
-        }
-
-        return null;
+    private Optional<OrderDAO> updateExistingOrder(OrderDAO order) {
+        return orderRepository.findById(order.getId())
+                .filter(existingOrder -> hasChanges(existingOrder, order))
+                .map(existingOrder -> {
+                    updateOrderFields(existingOrder, order);
+                    return existingOrder;
+                });
     }
 
     /**
