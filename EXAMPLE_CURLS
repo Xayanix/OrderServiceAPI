@@ -1,0 +1,25 @@
+POST ORDER
+
+curl --location 'http://localhost:8080/orders' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "shipmentNumber": "12345",
+    "receiverEmail": "receiver@example.com",
+    "receiverCountryCode": "US",
+    "senderCountryCode": "UK",
+    "statusCode": 50
+}'
+
+
+
+PATCH ORDER
+
+curl --location --request PATCH 'http://localhost:8080/orders/1' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "shipmentNumber": "12345",
+    "receiverEmail": "receiver@example.com",
+    "receiverCountryCode": "DE",
+    "senderCountryCode": "PL",
+    "statusCode": 20
+}'
