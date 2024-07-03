@@ -33,7 +33,7 @@ This project implements a web service designed to handle high volume traffic of 
     cd OrderServiceAPI
     ```
 
-2. Compile app using (requires at least Maven 3.6.3+):
+2. Compile app using Maven (requires at least 3.6.3+ version):
     ```bash
     mvn clean package
     ```
@@ -61,7 +61,7 @@ Once the application is running, it will listen on port 8080 for incoming order 
 
 Tests can be run using:
 ```bash
-./mvnw test
+mvn test
 ```
 
 ### Example CURLs
@@ -86,9 +86,7 @@ curl --location --request PATCH 'http://localhost:8080/orders/1' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "shipmentNumber": "12345",
-    "receiverEmail": "receiver@example.com",
     "receiverCountryCode": "DE",
-    "senderCountryCode": "PL",
     "statusCode": 20
 }'
 ```
