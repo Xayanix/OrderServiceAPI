@@ -12,6 +12,7 @@ public class OrderDeserializer implements Deserializer<OrderDAO> {
 
     @Override
     public void configure(Map<String, ?> configs, boolean isKey) {
+
     }
 
     @Override

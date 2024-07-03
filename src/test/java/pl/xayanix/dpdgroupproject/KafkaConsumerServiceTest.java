@@ -11,7 +11,6 @@ import pl.xayanix.dpdgroupproject.service.IEmailService;
 import pl.xayanix.dpdgroupproject.service.IOrderService;
 import pl.xayanix.dpdgroupproject.service.impl.KafkaConsumerService;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
 
 public class KafkaConsumerServiceTest {

@@ -4,7 +4,7 @@ This project implements a web service designed to handle high volume traffic of 
 
 ## Features
 
-- Handles high volume traffic without becoming unresponsive (probably).
+- Handles high volume traffic without becoming unresponsive.
 - Logs each received request in the database.
 - Mocks e-mail sending service (no actual e-mails are sent).
 - Provides controllable performance for both receiving and sending data functions.
@@ -90,3 +90,9 @@ curl --location --request PATCH 'http://localhost:8080/orders/1' \
     "statusCode": 20
 }'
 ```
+
+
+## Performance output
+![Tests with Postman](https://i.imgur.com/h0B4UTw.png)
+
+API responded with average 6ms with 30000+ requests
